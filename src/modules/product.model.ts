@@ -1,4 +1,4 @@
-import { Schema, model, Model, ObjectId } from "mongoose";
+import { Schema, model, Model, ObjectId, Types } from "mongoose";
 import { ProductModel, TAuthor, TProduct } from "./product/product.interface";
 import validator from 'validator';
 
@@ -8,14 +8,7 @@ const authorSchema = new Schema<TAuthor>({
         type: String,
         required: [true, 'First Name is required'],
         trim: true,
-        maxlength: [100, 'First name cannot be more than 100 characters'],
-        validate: {
-            validator: function (value: string) {
-                const firstNameStr = value.charAt(0).toUpperCase() + value.slice(1);
-                return firstNameStr === value;
-            },
-            message: "{VALUE} is not in capitalize format"
-        }
+        
     },
     middleName: {
         type: String,
@@ -26,16 +19,11 @@ const authorSchema = new Schema<TAuthor>({
         type: String,
         required: [true, 'Last Name is required'],
         trim: true,
-        maxlength: [100, 'Last name cannot be more than 100 characters'],
-        validate: {
-            validator: function (value: string) {
-                const lastNameStr = value.charAt(0).toUpperCase() + value.slice(1);
-                return lastNameStr === value;
-            },
-            message: "{VALUE} is not in capitalize format"
-        }
+        
+        
     }
-});
+},
+{_id:false});
 
 
 const productSchema = new Schema<TProduct, ProductModel>(

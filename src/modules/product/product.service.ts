@@ -1,6 +1,7 @@
 import { ObjectId } from "mongoose";
 import { Product } from "../product.model";
 import { TProduct } from "./product.interface";
+import { Types } from "mongoose";
 
 
 
@@ -18,25 +19,39 @@ const getAllProductFromDB=async()=>{
     return result
 }
 
-const getSpecificProductFromDB=async(id:ObjectId)=>{
+const getSpecificProductFromDB=async(id:string)=>{
     const result=await Product.findOne({id})
     return result
 }
-const updateProductFromDB= async (id:ObjectId,price:number,quantity:number)=>{
+const updateProductFromDB= async (id:string,price:number,quantity:number)=>{
+    
     const result=await Product.updateOne(
         {
-            price:price
+            _id:new Types.ObjectId(id)
         },
         {
-            quantity:quantity
+            $set:{
+                price:price,
+                quantity:quantity
+            }
         }
     )
     return result
 
 
 }
-const deleteProductFromDB= async (id:ObjectId)=>{
-    const result=await Product.updateOne({id},{inStock:false})
+const deleteProductFromDB= async (id:string)=>{
+    // const _id=new Types.ObjectId(id)
+    const result=await Product.updateOne(
+        {
+            _id:new Types.ObjectId(id)
+        },
+        {
+            $set:{
+                inStock:false
+            }
+        }
+    )
     return result
 }
 
@@ -44,5 +59,6 @@ export const ProductServices={
     createProductIntoDB,
     getAllProductFromDB,
     getSpecificProductFromDB,
+    updateProductFromDB,
     deleteProductFromDB
 };
