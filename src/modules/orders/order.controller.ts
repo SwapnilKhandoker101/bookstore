@@ -28,6 +28,26 @@ const createOrder=async(req:Request,res:Response)=>{
     }
 }
 
+const getRevenueFromOrders=async(req:Request,res:Response)=>{
+    try{
+        const result=await OrderServices.getRevenueFromOrders()
+        res.status(200).json({
+            success:true,
+            message: "Revenue calculated successfully",
+            data:{result}
+        })
+
+    }catch(err:any){
+        res.status(400).json({
+            message: err.message || 'Failed to calculate the revenue',
+            success: false,
+            err,
+            stack: err.stack,
+          });
+    }
+} 
+
 export const OrderControllers={
-    createOrder
+    createOrder,
+    getRevenueFromOrders
 }

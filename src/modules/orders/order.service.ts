@@ -36,12 +36,50 @@ const createOrder= async(orderData:Torder)=>{
 
 }
 
-// const getRevenueFromOrders=async(OrderData:Torder)=>{
-//     const 
-// }
+const getRevenueFromOrders=async()=>{
+    const result=await Order.aggregate(
+        [
+            {
+                $addFields:{
+                    productId:{
+                        $toObjectId:"$product"
+                    }
+                }
+            },
+            {
+                $lookup:{
+                    from: "products", 
+                    localField: "productId", 
+                    foreignField: "_id", 
+                    as: "productDetails",
+                }
+               
+            },
+            {
+                $unwind:"$productDetails"
+            },
+            {
+                $project:{
+                    totalRevenue:{$multiply:["$quantity","$productDetails.price"]}
+                }
+            },
+            {
+                $group: {
+                    _id: null, 
+                    totalRevenue: { $sum: "$totalRevenue" },
+                  },  
+            }
+
+        ]
+    )
+
+    return result[0]?.totalRevenue||0;
+   
+}
 
 
 
 export const OrderServices={
-    createOrder
+    createOrder,
+    getRevenueFromOrders
 }
