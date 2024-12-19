@@ -7,7 +7,7 @@ import { error } from "console";
 const createProduct = async (req: Request, res: Response) => {
   try {
     const { product: productData } = req.body;
-    console.log(productData);
+    // console.log(productData);
     const zodparsedData = productValidationSchema.parse(productData);
     const result = await ProductServices.createProductIntoDB(
       zodparsedData as TProduct,
@@ -77,7 +77,7 @@ const updateProductFromDB = async (
 ): Promise<void> => {
   try {
     const { productId } = req.params;
-    console.log(productId);
+    // console.log(productId);
     const { price, quantity } = req.body;
     if (price == null || quantity == null) {
       throw error("price and quantity cannot be null");

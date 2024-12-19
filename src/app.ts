@@ -11,11 +11,10 @@ app.use(cors());
 
 // application routes:
 
-app.use("/api/products", ProductRoutes);
-
 app.get("/", (req: Request, res: Response) => {
   res.send("Welcome to the API");
 });
+app.use("/api/products", ProductRoutes);
 
 app.use("/api/orders", OrderRoutes);
 
