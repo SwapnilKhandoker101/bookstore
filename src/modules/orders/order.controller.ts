@@ -2,10 +2,9 @@ import { Request, Response } from "express";
 import orderValidationSchema from "./order.zod.validation";
 import { OrderServices } from "./order.service";
 
-
 const createOrder = async (req: Request, res: Response) => {
   try {
-    const { order: orderData } = req.body;
+    const orderData = req.body;
     const zodparsedData = orderValidationSchema.parse(orderData);
     const result = await OrderServices.createOrder(zodparsedData);
     res.status(200).json({
@@ -13,7 +12,7 @@ const createOrder = async (req: Request, res: Response) => {
       success: true,
       data: result,
     });
-  } catch (err:any) {
+  } catch (err: any) {
     res.status(400).json({
       message: err.message || "Failed to create order",
       success: false,
@@ -25,11 +24,11 @@ const createOrder = async (req: Request, res: Response) => {
 
 const getRevenueFromOrders = async (req: Request, res: Response) => {
   try {
-    const result = await OrderServices.getRevenueFromOrders();
+    const totalRevenue = await OrderServices.getRevenueFromOrders();
     res.status(200).json({
       success: true,
       message: "Revenue calculated successfully",
-      data: { result },
+      data: { totalRevenue },
     });
   } catch (err: any) {
     res.status(400).json({

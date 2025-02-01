@@ -25,9 +25,9 @@ const getSpecificProductFromDB = async (id: string) => {
 const updateProductFromDB = async (
   id: string,
   price: number,
-  quantity: number,
+  quantity: number
 ) => {
-  const result = await Product.updateOne(
+  const result = await Product.findByIdAndUpdate(
     {
       _id: new Types.ObjectId(id),
     },
@@ -37,6 +37,10 @@ const updateProductFromDB = async (
         quantity: quantity,
       },
     },
+    {
+      new: true,
+      runValidators: true,
+    }
   );
   return result;
 };
@@ -50,7 +54,7 @@ const deleteProductFromDB = async (id: string) => {
       $set: {
         inStock: false,
       },
-    },
+    }
   );
   return result;
 };

@@ -6,13 +6,14 @@ import { error } from "console";
 
 const createProduct = async (req: Request, res: Response) => {
   try {
-    const { product: productData } = req.body;
+    const productData = req.body;
     // console.log(productData);
     const zodparsedData = productValidationSchema.parse(productData);
     const result = await ProductServices.createProductIntoDB(
       zodparsedData as TProduct,
     );
     res.status(200).json({
+      message: "Book created successfully",
       success: true,
       data: result,
     });
@@ -30,6 +31,7 @@ const getAllProducts = async (req: Request, res: Response) => {
   try {
     const result = await ProductServices.getAllProductFromDB();
     res.status(200).json({
+      message: "Books retreived successfully",
       success: true,
       data: result,
     });
@@ -45,7 +47,7 @@ const getAllProducts = async (req: Request, res: Response) => {
 
 const getSpecificProduct = async (
   req: Request,
-  res: Response,
+  res: Response
 ): Promise<void> => {
   try {
     const { _id } = req.params;
@@ -58,8 +60,8 @@ const getSpecificProduct = async (
     // const objectId:Types.ObjectId=new mongoose.Types.ObjectId(_id);
     const result = await ProductServices.getSpecificProductFromDB(_id);
     res.status(200).json({
+      message: "Books retreived successfully",
       success: true,
-      message: "Specific product is retreived successfully",
       data: result,
     });
   } catch (err: any) {
@@ -73,7 +75,7 @@ const getSpecificProduct = async (
 
 const updateProductFromDB = async (
   req: Request,
-  res: Response,
+  res: Response
 ): Promise<void> => {
   try {
     const { productId } = req.params;
@@ -92,7 +94,7 @@ const updateProductFromDB = async (
     const result = await ProductServices.updateProductFromDB(
       productId,
       price,
-      quantity,
+      quantity
     );
     console.log(result);
     if (result.matchedCount === 0) {
@@ -102,9 +104,10 @@ const updateProductFromDB = async (
       });
       return;
     }
+
     res.status(200).json({
-      success: true,
       message: "Product updated ",
+      success: true,
       data: result,
     });
   } catch (err: any) {
@@ -126,11 +129,11 @@ const deleteProductFromDB = async (req: Request, res: Response) => {
     //     })
     // }
     // const objectId:Types.ObjectId=new mongoose.Types.ObjectId(_id);
-    const result = await ProductServices.deleteProductFromDB(productId);
+    // const result = await ProductServices.deleteProductFromDB(productId);
     res.status(200).json({
+      message: "Book deleted successfully",
       success: true,
-      message: "Product deleted ",
-      data: result,
+      data: {},
     });
   } catch (err: any) {
     res.status(500).json({

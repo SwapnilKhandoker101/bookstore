@@ -1,26 +1,26 @@
 import { Schema, model, ObjectId } from "mongoose";
-import { ProductModel, TAuthor, TProduct } from "./product/product.interface";
+import { ProductModel, TProduct } from "./product/product.interface";
 
-const authorSchema = new Schema<TAuthor>(
-  {
-    firstName: {
-      type: String,
-      required: [true, "First Name is required"],
-      trim: true,
-    },
-    middleName: {
-      type: String,
-      trim: true,
-      maxlength: [100, "Middle name cannot be more than 100 characters"],
-    },
-    lastName: {
-      type: String,
-      required: [true, "Last Name is required"],
-      trim: true,
-    },
-  },
-  { _id: false },
-);
+// const authorSchema = new Schema<TAuthor>(
+//   {
+//     firstName: {
+//       type: String,
+//       required: [true, "First Name is required"],
+//       trim: true,
+//     },
+//     middleName: {
+//       type: String,
+//       trim: true,
+//       maxlength: [100, "Middle name cannot be more than 100 characters"],
+//     },
+//     lastName: {
+//       type: String,
+//       required: [true, "Last Name is required"],
+//       trim: true,
+//     },
+//   },
+//   { _id: false },
+// );
 
 const productSchema = new Schema<TProduct, ProductModel>(
   {
@@ -31,7 +31,7 @@ const productSchema = new Schema<TProduct, ProductModel>(
       maxlength: [200, "Title cannot exceed 200 characters"],
     },
     author: {
-      type: authorSchema,
+      type: String,
       required: true,
     },
     price: {

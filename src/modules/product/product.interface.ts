@@ -1,17 +1,17 @@
 import { Model, ObjectId } from "mongoose";
 
 //Author type:
-export type TAuthor = {
-  firstName: string;
-  middleName?: string;
-  lastName: string;
-};
+// export type TAuthor = {
+//   firstName: string;
+//   middleName?: string;
+//   lastName: string;
+// };
 
 // Product Type:
 export type TProduct = {
   _id?: ObjectId;
   title: string;
-  author: TAuthor;
+  author: string;
   price: number;
   category: "Fiction" | "Science" | "SelfDevelopment" | "Poetry" | "Religious";
   description: string;
