@@ -10,7 +10,7 @@ const createProduct = async (req: Request, res: Response) => {
     // console.log(productData);
     const zodparsedData = productValidationSchema.parse(productData);
     const result = await ProductServices.createProductIntoDB(
-      zodparsedData as TProduct,
+      zodparsedData as TProduct
     );
     res.status(200).json({
       message: "Book created successfully",
@@ -47,7 +47,7 @@ const getAllProducts = async (req: Request, res: Response) => {
 
 const getSpecificProduct = async (
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<void> => {
   try {
     const { _id } = req.params;
@@ -75,7 +75,7 @@ const getSpecificProduct = async (
 
 const updateProductFromDB = async (
   req: Request,
-  res: Response
+  res: Response,
 ): Promise<void> => {
   try {
     const { productId } = req.params;
@@ -94,10 +94,10 @@ const updateProductFromDB = async (
     const result = await ProductServices.updateProductFromDB(
       productId,
       price,
-      quantity
+      quantity,
     );
-    console.log(result);
-    if (result.matchedCount === 0) {
+    // console.log(result);
+    if (!result) {
       res.status(404).json({
         success: false,
         message: "Product not found",
